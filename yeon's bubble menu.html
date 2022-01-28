@@ -1,0 +1,242 @@
+<script> 
+    var no=15,speed=60,slider=30,fallmax=8,wind=0,fallwhat="●",fallsize=20,fallfont="Tahoma";
+    var colours=new Array("#000000","#1B1B1B","#383838","#555555","#717171","#8D8D8D","#AAAAAA","#C6C6C6","#E3E3E3","#FFFFFF");
+
+    var o=new Array(), tog=1, dofallt=new Array();
+    var ns4=(document.layers)?1:0;
+    var ie4=(document.all)?1:0;
+    var ns6=(document.getElementById&&!document.all)?1:0;
+    if(ie4) falllayer="document.all['gf'+i].style";
+    if(ns4) falllayer="document.layers['gf'+i]";
+    if(ns6) falllayer="document.getElementById('gf'+i).style";
+    function winWid(){ return (ns4||ns6)?window.innerWidth:document.body.clientWidth; }
+    function winHei(){ return (ns4||ns6)?window.innerHeight:document.body.clientHeight; }
+    function winOfy(){ return (ns4||ns6)?window.pageYOffset:document.body.scrollTop; }
+    function togFall(){ for(i=0;i<no;i++){ if(tog==1){ with(eval(falllayer)){ left=-500; } clearTimeout(dofallt[i]); }else{ fallt(i); } } tog*=-1 }
+    function newobj(q,t){
+        spin = parseInt(Math.random()*slider);
+        spin = (Math.random()>0.5) ? spin : -spin;
+        o[q] = new Array(parseInt(Math.random()*(winWid()-slider)),-30,spin,0.02+Math.random()/10,parseInt(1+Math.random()*fallmax),0);
+        if(t==1){
+            if(ns4){ document.write('<layer name="gf'+q+'" left="0" top="0" visibility="show">'+fallwhat+'</layer>'); }
+            if(ie4||ns6){ document.write('<span id="gf'+q+'" style="POSITION: absolute; Z-INDEX: -'+q+'; VISIBILITY: visible; TOP: 0px; LEFT: 0px; font-size: '+fallsize+'px; font-family: '+fallfont+';">'+fallwhat+'</span>'); }
+        }
+    }
+    function fallt(i){
+        if((o[i][1]>winHei()-(fallsize*1.5))||(o[i][0]>winWid()-slider-(fallsize*fallwhat.length))){ newobj(i,0); }
+        o[i][1] += o[i][4];
+        o[i][0]+=wind;
+        o[i][5] += o[i][3];
+        sizexy=Math.sin(o[i][5]);
+        lay=(ie4)?sizexy:parseInt(sizexy+1);
+        sizexy=(sizexy>0)?sizexy:0-sizexy;
+        with(eval(falllayer)){
+            top = o[i][1]+winOfy();
+            left = o[i][0]+o[i][2]*Math.cos(o[i][5]);
+            if(!ns4){
+                zIndex=lay;
+                color=colours[parseInt(sizexy*(colours.length-1))]
+            }
+        }
+        dofallt[i] = setTimeout("fallt("+i+")", speed);
+    }
+    for (i = 0; i < no; i++){ newobj(i,1); fallt(i); }
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Yeon's Bubble Menu</title>
+	 <style>
+        #header {
+            margin-bottom: 20px;
+            text-align: center;
+            color :brown;
+            font: bold 70px Comic Sans MS;
+        }
+        body{
+            margin-left: auto; margin-right: auto;
+            background: #EFD792;
+
+        }
+        #menubar{
+           margin-left: auto; margin-right: auto;
+            text-align: center;
+            background: brown;
+            width: 90%;
+        }
+        #menubar ul{
+            margin: 0;
+            padding: 0;
+        }
+        #menubar ul li {
+            display: inline-block;
+            list-style-type: none;
+            padding: 10px 100px;
+        }
+        #menubar ul li a{
+            text-align: center;
+            font-family: Comic Sans MS;
+            color :white;
+            text-decoration: none;
+        }
+        #menubar ul li a:hover {
+            color: black;
+        }
+        #footer {
+            margin-left: auto; margin-right: auto;
+            margin-top: 100px;
+            margin-bottom: 30px;
+            min-width: 90%;
+            max-width: 90%;
+            clear: both;
+            background: #D5BFA7;
+            font-weight: bold;
+            font-family: Comic Sans MS;
+        }
+        @keyframes backColorAnimation{
+            0% {background: #DC4E2E;}
+            50%{background:  #A05645;}
+            100%{background:  #6A2D1F;}
+        }
+        @keyframes textColorAnimation{
+            0% {color: yellow;}
+            50%{color:  green;}
+            100%{color:  black;}
+        }
+        #NEW{
+            animation-name: textColorAnimation;
+            animation-duration: 1s;
+            animation-iteration-count: infinite;
+        }
+        #top3 {
+            min-width: 90%;
+            max-width: 90%;
+        }
+        #top3 td{
+            animation-name: backColorAnimation;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            text-align: center;
+            margin: auto;
+        }
+        #bestmenu table{
+            min-width: 90%;
+            max-width: 90%;
+           /* margin: 0px 80px;*/
+           margin-left: auto; margin-right: auto;
+
+            text-align: center;
+            font: bold 50px Comic Sans MS;
+        }
+        #menupage table{
+            min-width: 90%;
+            max-width: 90%;
+            margin-left: auto; margin-right: auto;
+        }
+        #bestmenu{
+            min-width: 90%;
+            max-width: 90%;
+           /* margin: 0px 80px;*/
+           margin-left: auto; margin-right: auto;
+
+            text-align: center;
+            font: bold 50px Comic Sans MS;
+        }
+        /*#bestmenu{
+            float: center;
+            font: bold 50px Comic Sans MS;
+        }*/
+        div{
+            margin: 40;
+        }
+    </style>
+    <script>
+        function changetaro(){
+            var taro=document.getElementById("taro");
+            taro.innerHTML= "4200won / 366kcal";
+        }
+        function changeblack(){
+            var black=document.getElementById("black");
+            black.innerHTML= "4200won / 269kcal";
+        }
+        function changegreen(){
+            var green=document.getElementById("green");
+            green.innerHTML= "4900won / 258kcal";
+        }
+        function changedarkchoco(){
+            var darkchoco=document.getElementById("darkchoco");
+            darkchoco.innerHTML= "4900won / 343kcal";
+        }
+         function changemintchoco(){
+            var mintchoco=document.getElementById("mintchoco");
+            mintchoco.innerHTML= "4900won / 381kcal";
+        }
+        function changeblacksugar(){
+            var blacksugar=document.getElementById("blacksugar");
+            blacksugar.innerHTML= "5700won / 392.6kcal";
+        }
+        function changetoppinut(){
+            var toppinut=document.getElementById("toppinut");
+            toppinut.innerHTML= "4900won / 339kcal";
+        }
+        function changeberry(){
+            var berry=document.getElementById("berry");
+            berry.innerHTML= "5100won / 216kcal";
+        }
+        function changegrape(){
+            var grape=document.getElementById("grape");
+            grape.innerHTML= "5500won / 310.8kcal";
+        }
+        function changeapple(){
+            var apple=document.getElementById("apple");
+            apple.innerHTML= "5000won / 307.3kcal";
+        }
+        function changeyogrt(){
+            var yogrt=document.getElementById("yogrt");
+            yogrt.innerHTML= "5300won / 324kcal";
+        }
+        function changeMango(){
+            var mango=document.getElementById("mango");
+            mango.innerHTML= "5100won / 197kcal";
+        }
+    </script>
+</head>
+<body>
+    <header id=header><img src="./images/bubble_tea.png" width="100" height="100">YEON'S BUBBLE MENU</header>
+    <nav id="menubar">
+        <ul>
+            <li><a href="./index.html">HOME</a></li>
+            <li><a href="./yeon's bubble menu.html">MEUE</a></li>
+            <li><a href="./yeon's bubble event.html">EVENT</a></li>
+            <li><a href="./yeon's bubble order.html">ORDER</a></li>
+            <li><a href="./yeon's bubble hire.html">HIRE</a></li> 
+        </ul>
+    </nav>
+    <div id="bestmenu">
+        <table>
+            <tr><td>&nbsp;&nbsp;</td></tr>
+            <tr><th colspan="3"><img src="./images/bubble_tea1.png" width="100" height="100">Best Menu TOP3<img src="./images/bubble_tea1.png" width="100" height="100"></th></tr>
+            <tr id="top3"><td><br>&nbsp;&nbsp;&nbsp;<img src="./images/민트초코.png">&nbsp;&nbsp;&nbsp;<br><span style="font-size: 25px">mintchoco bubble tea</span></td><td><br>&nbsp;&nbsp;&nbsp;<img src="./images/딸기요구르트.png">&nbsp;&nbsp;&nbsp;<br><span style="font-size: 25px">strawberry-yogurt bubble tea</span></td><td><br>&nbsp;&nbsp;&nbsp;<img src="./images/타로.png">&nbsp;&nbsp;&nbsp;<br><span style="font-size: 25px">taro milk bubble tea</span></td></tr>
+        </table>
+    </div>
+    <div id="menupage">
+        <table style="text-align: center; font: bold 20px Comic Sans MS;">
+            <tr><td>&nbsp;&nbsp;</td></tr>
+            <tr><td>&nbsp;&nbsp;</td></tr>
+            <tr><th colspan="4" style="font:bold 50px Comic Sans MS"><img src="./images/bubble_tea1.png" width="100" height="70">Menu<img src="./images/bubble_tea1.png" width="100" height="70"></th></tr>
+            <tr><td colspan="4">메뉴 이름을 클릭하면 가격과 칼로리로 바뀝니다.</td></tr>
+            <tr><td id="NEW" colspan="4">New 메뉴들은 깜빡입니다.</td></tr>
+            <tr><td><img src="./images/타로.png"><br><span id="taro" onclick="changetaro()">Taro Milk Bubble Tea</span></td><td><img src="./images/블랙.png"><br><span id="black" onclick="changeblack()">Black Milk Bubble Tea</span></td><td><img src="./images/녹차.png"><br><span id="green" onclick="changegreen()">Green Bubble Tea</span></td><td id="NEW"><img src="./images/다크초코.png"><br><span id="darkchoco" onclick="changedarkchoco()">Dark Choco Bubble Tea</span></td></tr>
+            <tr><td  id="NEW"><img src="./images/토피넛.png"><br><span id="toppinut" onclick="changetoppinut()">Toppinut Bubble Tea</span></td><td><img src="./images/흑당.png"><br><span id="blacksugar" onclick="changeblacksugar()">Black Sugar Bubble Tea</span></td><td><img src="./images/딸기요구르트.png"><br><span id="yogrt" onclick="changeyogrt()">Strawberry Yogurt</span></td><td><img src="./images/사과.png"><br><span id="apple" onclick="changeapple()">Apple Bubble Tea</span></td></tr>
+            <tr><td><img src="./images/포도.png"><br><span id="grape" onclick="changegrape()">Grape Bubble Tea</span></td><td><img src="./images/민트초코.png"><br><span id="mintchoco" onclick="changemintchoco()">Mintchoco Bubble Tea</span></td><td><img src="./images/딸기쥬얼ㄹ.png"><br><span id="berry" onclick="changeberry()">StrawJewelry Bubble Tea</span></td><td><img src="./images/망고쥬얼ㄹ.png"><br><span id="mango" onclick="changeMango()">Mango Bubble Tea</span></td></tr>
+            <tr><td>&nbsp;&nbsp;</td></tr>
+            <tr><td>&nbsp;&nbsp;</td></tr>
+        </table>
+    </div>
+    <table id="footer">
+        <tr><td rowspan="3" style="text-align: center;"><img src="./images/bubble_tea1.png" width="110" height="110"></td><td>&nbsp;</td><td>Yeon's Bubble Company Location : 경기도 군포시 오금동</td><td>Yeon's Bubble Company Email : ydol2@naver.com</td><td rowspan="3" style="text-align: center;"><img src="./images/bubble_tea1.png" width="110" height="110"></td></tr>
+        <tr><td>&nbsp;</td><td>Yeon's Bubble Company Phone Number : 010-8414-1178</td><td>Yeon's Bubble Company Time : 9:00AM ~ 10:30PM </td></tr>
+        <tr><td>&nbsp;</td><td>Yeon's Bubble Company 대표 : 이연희</td><td>Yeon's Bubble Company Web : www.yeon'sbubble.com</td></tr>
+    </table>
+</body>
+</html>

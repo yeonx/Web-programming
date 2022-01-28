@@ -1,0 +1,161 @@
+<script> 
+    var no=15,speed=60,slider=30,fallmax=8,wind=0,fallwhat="●",fallsize=20,fallfont="Tahoma";
+    var colours=new Array("#000000","#1B1B1B","#383838","#555555","#717171","#8D8D8D","#AAAAAA","#C6C6C6","#E3E3E3","#FFFFFF");
+
+    var o=new Array(), tog=1, dofallt=new Array();
+    var ns4=(document.layers)?1:0;
+    var ie4=(document.all)?1:0;
+    var ns6=(document.getElementById&&!document.all)?1:0;
+    if(ie4) falllayer="document.all['gf'+i].style";
+    if(ns4) falllayer="document.layers['gf'+i]";
+    if(ns6) falllayer="document.getElementById('gf'+i).style";
+    function winWid(){ return (ns4||ns6)?window.innerWidth:document.body.clientWidth; }
+    function winHei(){ return (ns4||ns6)?window.innerHeight:document.body.clientHeight; }
+    function winOfy(){ return (ns4||ns6)?window.pageYOffset:document.body.scrollTop; }
+    function togFall(){ for(i=0;i<no;i++){ if(tog==1){ with(eval(falllayer)){ left=-500; } clearTimeout(dofallt[i]); }else{ fallt(i); } } tog*=-1 }
+    function newobj(q,t){
+        spin = parseInt(Math.random()*slider);
+        spin = (Math.random()>0.5) ? spin : -spin;
+        o[q] = new Array(parseInt(Math.random()*(winWid()-slider)),-30,spin,0.02+Math.random()/10,parseInt(1+Math.random()*fallmax),0);
+        if(t==1){
+            if(ns4){ document.write('<layer name="gf'+q+'" left="0" top="0" visibility="show">'+fallwhat+'</layer>'); }
+            if(ie4||ns6){ document.write('<span id="gf'+q+'" style="POSITION: absolute; Z-INDEX: -'+q+'; VISIBILITY: visible; TOP: 0px; LEFT: 0px; font-size: '+fallsize+'px; font-family: '+fallfont+';">'+fallwhat+'</span>'); }
+        }
+    }
+    function fallt(i){
+        if((o[i][1]>winHei()-(fallsize*1.5))||(o[i][0]>winWid()-slider-(fallsize*fallwhat.length))){ newobj(i,0); }
+        o[i][1] += o[i][4];
+        o[i][0]+=wind;
+        o[i][5] += o[i][3];
+        sizexy=Math.sin(o[i][5]);
+        lay=(ie4)?sizexy:parseInt(sizexy+1);
+        sizexy=(sizexy>0)?sizexy:0-sizexy;
+        with(eval(falllayer)){
+            top = o[i][1]+winOfy();
+            left = o[i][0]+o[i][2]*Math.cos(o[i][5]);
+            if(!ns4){
+                zIndex=lay;
+                color=colours[parseInt(sizexy*(colours.length-1))]
+            }
+        }
+        dofallt[i] = setTimeout("fallt("+i+")", speed);
+    }
+    for (i = 0; i < no; i++){ newobj(i,1); fallt(i); }
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Yeon's Bubble Company</title>
+    <style>
+        #header {
+            margin-bottom: 20px;
+            text-align: center;
+            color :brown;
+            font: bold 70px Comic Sans MS;
+        }
+        body{
+            min-width: 1000px;
+            max-width: 1000px;
+            background: #EFD792;
+        }
+        #menubar{
+            background: brown;
+        }
+        #menubar ul{
+            margin: 0;
+            padding: 0;
+            width: 100%
+        }
+        #menubar ul li {
+            display: inline-block;
+            list-style-type: none;
+            padding: 10px 70px;
+        }
+        #menubar ul li a{
+            text-align: center;
+            font-family: Comic Sans MS;
+            color :white;
+            text-decoration: none;
+        }
+        #menubar ul li a:hover {
+            color: black;
+        }
+        #footer {
+            margin:100 0;
+            min-width: 1000px;
+            max-width: 1000px;
+            clear: both;
+            background: #D5BFA7;
+            font-weight: bold;
+            font-family: Comic Sans MS;
+        }
+        #intro table{
+            margin: 50 0;
+            font-weight: bold;
+            font-family: Comic Sans MS;
+            font-size: 20px;
+            background: #FCECDB;
+        }
+        #intro table td{
+            margin-top: 70px;
+            margin-bottom:20px;
+            text-align: left;
+        }
+        @keyframes textColorAnimation{
+            0% {color : red;}
+            50%{color : brown;}
+            100%{color : black;}
+        }
+        #ad table{
+            margin: 50 0;
+        }
+        #ad table tr th{
+            font-size: 50;
+            font-weight: bold;
+            font-family: Comic Sans MS;
+            animation-name: textColorAnimation;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+        table tr td span{
+            animation-name: textColorAnimation;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+    </style>
+</head>
+<body>
+    <header id=header><img src="./images/bubble_tea.png" width="100" height="100">YEON'S BUBBLE</header>
+    <nav id="menubar">
+        <ul>
+            <li><a href="yeon's bubble.html">HOME</a></li>
+            <li><a href="yeon's bubble menu.html">MEUE</a></li>
+            <li><a href="yeon's bubble event.html">EVENT</a></li>
+            <li><a href="yeon's bubble order.html">ORDER</a></li>
+            <li><a href="yeon's bubble hire.html">HIRE</a></li> 
+        </ul>
+    </nav>
+    <div id="ad">
+        <table>
+             <tr><th rowspan="2" style="text-align: center;">Launch New Menu!!</th><td rowspan="2" style="text-align: center;">&nbsp;<img src="./images/bubble_tea2.png">&nbsp;</td><td style="font:bold 30px Comic Sans MS">What is the new menu?</td></tr><tr><td style="font:bold 30px Comic Sans MS">  Please press the menu box and <span>check the "NEW MENU"!</span></td></tr>
+        </table>
+    </div>
+    <div id="intro">
+        <table>
+            <tr><th colspan="3" style="text-align: center; font-size:40">Yeon's Bubble의 pride</th></tr>
+            <tr><td colspan="3">&nbsp;</td></tr>
+            <tr><td>&nbsp;</td><td>저희 Yeon's Bubble은 티백이나 가루를 멀리하고 <span>황차에 바치던 잎차</span>를 고집합니다.</td><td rowspan="2" style="text-align: center;">&nbsp;<img src="./images/bubble_tea1.png" width="200" height="200">&nbsp;</td></tr><tr><td>&nbsp;</td><td>1도 1초도 어기지 않고 차마다 다른 <span>황금률</span>로 우립니다.</td></tr>
+            <tr><td rowspan="4" style="text-align: center;">&nbsp;<img src="./images/bubble_tea2.png" width="200" height="200">&nbsp;</td></tr>
+            <tr><td>고정관념에 갇히지 않고 끝없이 <span>새로운 맛을 창조</span>합니다.</td></tr>
+            <tr></tr>
+            <tr><td>매일매일 새롭고 다양한 맛과 함께 차 한 잔에 우려내는 행복한 순간을 위해 <span>끊임없이 노력</span>하고 있습니다.</td></tr>
+            <tr><td>&nbsp;</td></tr>
+        </table>
+    </div>
+    <table id="footer">
+        <tr><td rowspan="3" style="text-align: center;"><img src="./images/bubble_tea1.png" width="110" height="110"></td><td>Yeon's Bubble Company Location : 경기도 군포시 오금동</td></tr>
+        <tr><td>Yeon's Bubble Company Phone Number : 010-8414-1178</td></tr>
+        <tr><td>Yeon's Bubble Company 대표 : 이연희</td></tr>
+    </table>
+</body>
+</html>
