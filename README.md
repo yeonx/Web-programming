@@ -1,9 +1,8 @@
 # Web-programming
 
-과제 - 버블티 페이지 만들기
+과제 - 웹 페이지 만들기
 
-계획서 : 
-[[006237] 웹프로그래밍_19011824_이연희.pptx](https://github.com/yeonx/Web-programming/files/7959188/006237._19011824_.pptx)
+나의 주제 : 버블티 홈페이지 만들기
 
 ## main화면
 🔊 배경음악 + 눈내리기 효과  
